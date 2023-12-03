@@ -1,43 +1,29 @@
 import cirq
-from cirq import H, rz, S
+from cirq import H, S, T, Z, X, rz, ry, rz
 from math import pi
 import numpy as np
-
-sim = cirq.Simulator()
-
-### RZ(pi/2)
-circuit = cirq.Circuit()
-q0, q1 = cirq.LineQubit.range(2)
-# circuit.append(H.on(q0))
-circuit.append(H.on(q1))
-circuit.append(H.on(q0).controlled_by(q1))
-# circuit.append(rz(pi/2).on(q1).controlled_by(q0))
-# circuit.append(rz(pi/2).on(q1).controlled_by(q0))
-
-results = sim.simulate(circuit)
-state1 = results.state_vector()
-
-print("circuit with RZ(π/2) is")
-print(circuit)
-print()
-
-print("the quantum state is")
-print(results.dirac_notation())
-print()
-
-circuit.append(measure(q0, q1, key='result'))
-
-print("the circuit is")
-print(circuit)
-print()
-
-
-# default representation in Cirq is with decimal numbers
-# with this function we convert the decimal numbers into binary (bitstrings)
 def bitstring(bits):
     return "".join(str(int(b)) for b in bits)
 
+circuit = cirq.Circuit()
+q0, q1 = cirq.LineQubit.range(2)
 
-# Execute the circuit
+circuit.append(H.on(q1))
+circuit.append(H.on(q0).controlled_by(q1))
+# circuit.append(H.on(q0))
+# circuit.append(rz(pi/2).on(q1).controlled_by(q0))
+# circuit.append(rz(pi/2).on(q1).controlled_by(q0))
+
+circuit.append(measure(q0, q1, key='result'))
+
+print("the circuit is\n", circuit, "\n")
+
+sim = cirq.Simulator()
+results = sim.simulate(circuit)
+state1 = results.state_vector()
+
+print("the quantum state is\n", results.dirac_notation(), "\n")
+
+
 samples = sim.run(circuit, repetitions=1000)
 print("outcomes:", samples.histogram(key='result', fold_func=bitstring))
