@@ -1,0 +1,31 @@
+# from math import pi, cos, sin, asin, acos
+# print('From complex number to Euler form:\n")
+# z = complex(3, -3)
+# r = abs(z)
+# angle = acos(z.real/r)
+# print(z, ' = ', r, '*e^(i*', angle, ')')
+# print('From Euler form to angle form:\n")
+# r = abs(z)
+# angle = acos(z.real/r)
+# cos_term = r*cos(angle)
+# sine_term = r*sin(angle)
+# term = complex(cos_term, sine_term)
+# print(r, '*e^(i*', angle, ' = ', term , ')')
+
+from math import pi, cos, sin, asin, acos
+
+print("From complex number to Euler form:\n")
+z = complex(3, -3)
+r = abs(z)
+angle = asin(z.imag/r)
+print(z, ' = ', r, '*e^(i*', angle, ')')
+
+
+print("From Euler form to angle form:\n")
+r = abs(z)
+angle = asin(z.imag/r)
+cos_term = r*cos(angle)
+sine_term = r*sin(angle)
+term = complex(cos_term, sine_term)
+
+print(r, '*e^(i*', angle, ' = ', term , ')')
