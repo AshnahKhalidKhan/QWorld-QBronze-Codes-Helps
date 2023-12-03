@@ -1,0 +1,19 @@
+z1 = complex(1/2, 1/2)
+z2 = complex(1/2, -1/2)
+
+
+# [a  b]   [a.conjugate()  c.conjugate()]
+# [c  d] . [b.conjugate()  d.conjugate()]
+a = z1
+b = z2
+c = z2
+d = z1
+
+
+Identity_a = a*a.conjugate() + b*b.conjugate()
+Identity_b = a*c.conjugate() + b*d.conjugate()
+Identity_c = c*a.conjugate() + d*b.conjugate()
+Identity_d = c*c.conjugate() + d*d.conjugate()
+
+print([Identity_a, Identity_b]) //should be 1, 0
+print([Identity_c, Identity_d]) //should be 0, 1
