@@ -1,0 +1,77 @@
+# draw the quantum state on Bloch sphere
+import cirq
+from cirq import H, rx, rz, ry, T, S, Z, X
+from cirq_web import BlochSphere
+from math import pi
+from random import randrange
+
+circuit = cirq.Circuit()
+q0 = cirq.LineQubit(0)
+
+circuit.append(rz(-0.5*pi).on(q0))
+circuit.append(ry(-0.333*pi).on(q0))
+circuit.append(rx(-0.25*pi).on(q0))
+# circuit.append(rz(pi/3).on(q0))
+# circuit.append(ry(2*pi/5).on(q0))
+# circuit.append(rx(1.5*pi).on(q0))
+# circuit.append(rz(-pi/3).on(q0))
+# circuit.append(ry(-2*pi/5).on(q0))
+# circuit.append(rx(-1.5*pi).on(q0))
+
+# circuit.append(ry(pi/3).on(q0))
+# circuit.append(rz(pi/5).on(q0))
+# circuit.append(rx(-pi/3).on(q0))
+# circuit.append(ry(-pi/5).on(q0))
+# circuit.append(rz(-0.143*pi).on(q0))
+
+# circuit.append(H.on(q0))
+# for i in range(5):
+#   circuit.append(T.on(q0))
+# for i in range(3):
+#   circuit.append(S.on(q0))
+# for i in range(7):
+#   circuit.append(cirq.inverse(T).on(q0))
+# for i in range(5):
+#   circuit.append(cirq.inverse(S).on(q0))
+
+# circuit.append(Z.on(q0))
+# circuit.append(T.on(q0))
+# circuit.append(S.on(q0))
+# circuit.append(cirq.inverse(T).on(q0))
+# circuit.append(cirq.inverse(S).on(q0))
+
+# # set the quantum state to |i>
+# circuit.append(H(q0))
+# circuit.append(rz(pi/2).on(q0))
+
+# # Apply rx(t) iteratively
+# for i in range(3):
+# #for i in range(7):
+#     circuit.append(rx(t).on(q0))
+
+print(circuit)
+
+# Simulate the circuit
+s = cirq.Simulator()
+results = s.simulate(circuit)
+state = results.state_vector()
+print(results)
+# print(state)
+
+# circuit.append(measure(q0, q1, key='result'))
+
+# print("the circuit is")
+# print(circuit)
+# print()
+
+def bitstring(bits):
+    return "".join(str(int(b)) for b in bits)
+
+
+# Execute the circuit
+# samples = s.run(circuit, repetitions=1000)
+# print("outcomes:", samples.histogram(key='result', fold_func=bitstring))
+
+# draw final state
+# sphere = BlochSphere(state_vector=state)
+# display(sphere)
