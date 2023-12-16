@@ -15,7 +15,7 @@ qc.h(q[0]) # apply the first Hadamard
 qc.measure(q,c) # the first measurement
 qc.h(q[0]).c_if(c,0) # apply the second Hadamard if the measurement outcome is 0
 qc.measure(q[0],c) # the second measurement
-qc.cx(q[1],q[0])
+# qc.cx(q[1],q[0])
 
 # qc.ccx(control-qubit1,control-qubit2,target-qubit)
 # # step 1: set qaux to |1> if both q3 and q2 are in |1>
