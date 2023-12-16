@@ -1,20 +1,22 @@
 import cirq
-from cirq import H, S, T, Z, X, rz, ry, rz, measure
+from cirq import H, S, T, Z, X, Y, rz, ry, rz, measure
 from math import pi
 import numpy as np
 def bitstring(bits):
     return "".join(str(int(b)) for b in bits)
 
 circuit = cirq.Circuit()
-q0, q1 = cirq.LineQubit.range(2)
+q0, q1, q2 = cirq.LineQubit.range(3)
 
-circuit.append(H.on(q1))
+circuit.append(H.on(q0))
+circuit.append(H.on(q2))
 circuit.append(H.on(q0).controlled_by(q1))
+circuit.append(Y.on(q2).controlled_by(q1))
 # circuit.append(H.on(q0))
 # circuit.append(rz(pi/2).on(q1).controlled_by(q0))
 # circuit.append(rz(pi/2).on(q1).controlled_by(q0))
 
-circuit.append(measure(q0, q1, key='result'))
+circuit.append(measure(q0, q1, q2, key='result'))
 
 print("the circuit is\n", circuit, "\n")
 
