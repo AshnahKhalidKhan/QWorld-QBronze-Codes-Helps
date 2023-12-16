@@ -1,0 +1,7 @@
+from math import cos, sin, pi
+
+theta = -63 # try one by one for other values
+n = 1000
+theta_in_radian = (theta/180)*pi
+print("Observations of |0⟩:", n*cos(theta_in_radian)**2)
+print("Observations of |1⟩:", n*sin(theta_in_radian)**2)
