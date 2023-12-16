@@ -1,1 +1,30 @@
+import cirq
+from cirq import X
+from cirq_web import BlochSphere
+from math import pi
+from random import randrange
+# quantum_file = path_files+"quantum.py"
+# %run $quantum_file
 
+circuit = cirq.Circuit()
+q0 = cirq.LineQubit(0)
+# circuit.append(X(q0)) # if applying on |1⟩
+
+theta = pi/4
+phi = pi/8
+lambda = pi/2
+
+myU3(circuit, theta, phi, lambda, q0)
+print(circuit)
+
+s = cirq.Simulator()
+results = s.simulate(circuit)
+state = results.state_vector()
+
+print("the randomly picked state is", state)
+print("probability of |0⟩:", abs(state[0])*abs(state[0]))
+print("probability of |1⟩:", abs(state[1])*abs(state[1]))
+
+# # Display the spehere
+# sphere = BlochSphere(state_vector=state)
+# display(sphere)
