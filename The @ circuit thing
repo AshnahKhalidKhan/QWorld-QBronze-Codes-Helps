@@ -1,5 +1,5 @@
 import cirq
-from cirq import H, S, T, Z, X, rz, ry, rz
+from cirq import H, S, T, Z, X, rz, ry, rz, measure
 from math import pi
 import numpy as np
 def bitstring(bits):
