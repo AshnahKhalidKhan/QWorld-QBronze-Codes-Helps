@@ -7,15 +7,16 @@ c = ClassicalRegister(1) # classical register with a single bit
 qc = QuantumCircuit(q,c) # quantum circuit with quantum and classical registers
 
 rotation_angle = 2*pi/3
-qc.ry(2*rotation_angle,q[0]) # qc.ry(angle_of_rotation_IN_RADIAN_and_multiplied_by_TWO, qubit)
+qc.ry(2*rotation_angle, q[0]) # qc.ry(angle_of_rotation_IN_RADIAN_and_multiplied_by_TWO, qubit)
 
 qc.measure(q,c)
 
 # draw the circuit
 qc.draw(output='mpl')
 
-# execute the program 1000 times
-job = execute(qc,Aer.get_backend('qasm_simulator'),shots=1000)
+# execute the program n times
+n = 1000
+job = execute(qc,Aer.get_backend('qasm_simulator'),shots=n)
 
 # print the results
 counts = job.result().get_counts(qc)
@@ -30,8 +31,8 @@ from math import sin,cos
 quantum_state = [ cos(rotation_angle) , sin (rotation_angle) ]
 print("The quantum state is",round(quantum_state[0],4),"|0> +",round(quantum_state[1],4),"|1>")
 
-the_expected_number_of_zeros = 1000*cos(rotation_angle)**2
-the_expected_number_of_ones = 1000*sin(rotation_angle)**2
+the_expected_number_of_zeros = n*cos(rotation_angle)**2
+the_expected_number_of_ones = n*sin(rotation_angle)**2
 
 # expected results
 print("The expected value of observing '0' is",round(the_expected_number_of_zeros,4))
@@ -43,5 +44,4 @@ quantum_file = path_files+"quantum.py"
 %run $quantum_file
 
 draw_qubit()
-
 draw_quantum_state(quantum_state[0],quantum_state[1],"|v>")
