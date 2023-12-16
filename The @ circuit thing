@@ -12,6 +12,8 @@ circuit.append(H.on(q0))
 circuit.append(H.on(q2))
 circuit.append(H.on(q0).controlled_by(q1))
 circuit.append(Y.on(q2).controlled_by(q1))
+circuit.append(T.on(q1).controlled_by(q0)) # Crazy 0.25 thing
+circuit.append(S.on(q1).controlled_by(q0)) # Crazy 0.50 thing
 # circuit.append(H.on(q0))
 # circuit.append(rz(pi/2).on(q1).controlled_by(q0))
 # circuit.append(rz(pi/2).on(q1).controlled_by(q0))
