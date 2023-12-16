@@ -15,6 +15,7 @@ qc.h(q[0]) # apply the first Hadamard
 qc.measure(q,c) # the first measurement
 qc.h(q[0]).c_if(c,0) # apply the second Hadamard if the measurement outcome is 0
 qc.measure(q[0],c) # the second measurement
+qc.barrier() # Add barrier; Asja sends her qubit to Balvis
 # qc.cx(q[1],q[0])
 
 # qc.ccx(control-qubit1,control-qubit2,target-qubit)
