@@ -9,6 +9,8 @@ q =  QuantumRegister(1) # quantum register with a single qubit
 c = ClassicalRegister(1) # classical register with a single bit
 qc = QuantumCircuit(q,c) # quantum circuit with quantum and classical registers
 
+qc.x(q[0]) # if starting state is |1⟩
+
 rotation_angle = pi/4
 # Rotation: qc.ry(rotation_angle, q[0]) # qc.ry(angle_of_rotation_IN_RADIAN_and_multiplied_by_TWO, qubit)
 qc.ry(rotation_angle, q[0])
@@ -25,7 +27,7 @@ qc.measure(q,c)
 qc.draw(output='mpl')
 
 # execute the program n times
-n = 1
+n = 1000
 job = execute(qc, Aer.get_backend('qasm_simulator'),shots=n)
 
 # print the results
