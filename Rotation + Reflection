@@ -1,7 +1,82 @@
+# from qiskit import QuantumRegister, ClassicalRegister, QuantumCircuit, execute, Aer
+# from qiskit.visualization import plot_histogram
+# from math import pi
+# from math import sin,cos
+# quantum_file = path_files+"quantum.py"
+# %run $quantum_file
+
+# q =  QuantumRegister(1) # quantum register with a single qubit
+# c = ClassicalRegister(1) # classical register with a single bit
+# qc = QuantumCircuit(q,c) # quantum circuit with quantum and classical registers
+
+# qc.x(q[0]) # if starting state is |1⟩
+
+# rotation_angle = pi/4
+# # Rotation: qc.ry(rotation_angle, q[0]) # qc.ry(angle_of_rotation_IN_RADIAN_and_multiplied_by_TWO, qubit)
+# qc.ry(rotation_angle, q[0])
+
+# reflection_angle = pi/4
+# # Reflection(reflection_angle): Hadamard -> rz(negative_of_reflection_angle) -> Hadamard
+# qc.h(q[0])
+# qc.rz(-reflection_angle, q[0])
+# qc.h(q[0])
+
+# qc.measure(q,c)
+
+# # draw the circuit
+# qc.draw(output='mpl')
+
+# # execute the program n times
+# n = 1000
+# job = execute(qc, Aer.get_backend('qasm_simulator'),shots=n)
+
+# # print the results
+# counts = job.result().get_counts(qc)
+# print(counts)
+# plot_histogram(counts)
+# print()
+
+# # the quantum state
+# print("The quantum state is", cos(rotation_angle),"|0> +", sin(rotation_angle),"|1>")
+# print()
+
+# # probabiltiy
+# print("Probability/Amplitude of '0':", cos(rotation_angle)**2)
+# print("Probability/Amplitude of '1':",sin(rotation_angle)**2)
+# print()
+
+# # expected results
+# print("The expected value of observing '0':", n*cos(rotation_angle)**2)
+# print("The expected value of observing '1':", n*sin(rotation_angle)**2)
+# print()
+
+# # draw the quantum state
+# draw_qubit()
+# draw_quantum_state(cos(rotation_angle), sin(rotation_angle),"|v>")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 from qiskit import QuantumRegister, ClassicalRegister, QuantumCircuit, execute, Aer
 from qiskit.visualization import plot_histogram
 from math import pi
-from math import sin,cos
+from math import sin,cos, arcsin, arcos
 quantum_file = path_files+"quantum.py"
 %run $quantum_file
 
@@ -9,17 +84,22 @@ q =  QuantumRegister(1) # quantum register with a single qubit
 c = ClassicalRegister(1) # classical register with a single bit
 qc = QuantumCircuit(q,c) # quantum circuit with quantum and classical registers
 
+
 qc.x(q[0]) # if starting state is |1⟩
 
-rotation_angle = pi/4
+# rotation_angle = pi/4
 # Rotation: qc.ry(rotation_angle, q[0]) # qc.ry(angle_of_rotation_IN_RADIAN_and_multiplied_by_TWO, qubit)
-qc.ry(rotation_angle, q[0])
+# qc.ry(rotation_angle, q[0])
 
-reflection_angle = pi/4
-# Reflection(reflection_angle): Hadamard -> rz(negative_of_reflection_angle) -> Hadamard
-qc.h(q[0])
-qc.rz(-reflection_angle, q[0])
-qc.h(q[0])
+reflection_angle = (4*pi)/9
+# Reflection(reflection_angle): Rotation(2 * reflection_angle) -> Z -> Rotation(NEGATIVE 2 * reflection_angle)
+for i in range(7):
+  # qc.h(q[0])
+  # qc.rz(-reflection_angle, q[0])
+  # qc.h(q[0])
+  qc.ry(2 * reflection_angle, q[0])
+  qc.z(q[0])
+  qc.ry(-2 * reflection_angle, q[0])
 
 qc.measure(q,c)
 
@@ -27,7 +107,7 @@ qc.measure(q,c)
 qc.draw(output='mpl')
 
 # execute the program n times
-n = 1000
+n = 100
 job = execute(qc, Aer.get_backend('qasm_simulator'),shots=n)
 
 # print the results
@@ -37,19 +117,19 @@ plot_histogram(counts)
 print()
 
 # the quantum state
-print("The quantum state is", cos(rotation_angle),"|0> +", sin(rotation_angle),"|1>")
+print("The quantum state is", cos(counts['0']/n),"|0> +", sin(counts['0']/n),"|1>")
 print()
 
 # probabiltiy
-print("Probability/Amplitude of '0':", cos(rotation_angle)**2)
-print("Probability/Amplitude of '1':",sin(rotation_angle)**2)
+print("Probability/Amplitude of '0':", cos(reflection_angle)**2)
+print("Probability/Amplitude of '1':", sin(reflection_angle)**2)
 print()
 
 # expected results
-print("The expected value of observing '0':", n*cos(rotation_angle)**2)
-print("The expected value of observing '1':", n*sin(rotation_angle)**2)
+print("The expected value of observing '0':", n*cos(reflection_angle)**2)
+print("The expected value of observing '1':", n*sin(reflection_angle)**2)
 print()
 
 # draw the quantum state
 draw_qubit()
-draw_quantum_state(cos(rotation_angle), sin(rotation_angle),"|v>")
+draw_quantum_state(cos(reflection_angle), sin(reflection_angle),"|v>")
