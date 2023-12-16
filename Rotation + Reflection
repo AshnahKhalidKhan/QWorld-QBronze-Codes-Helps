@@ -1,13 +1,23 @@
 from qiskit import QuantumRegister, ClassicalRegister, QuantumCircuit, execute, Aer
 from qiskit.visualization import plot_histogram
 from math import pi
+from math import sin,cos
+quantum_file = path_files+"quantum.py"
+%run $quantum_file
 
 q =  QuantumRegister(1) # quantum register with a single qubit
 c = ClassicalRegister(1) # classical register with a single bit
 qc = QuantumCircuit(q,c) # quantum circuit with quantum and classical registers
 
-rotation_angle = 2*pi/3
-qc.ry(2*rotation_angle, q[0]) # qc.ry(angle_of_rotation_IN_RADIAN_and_multiplied_by_TWO, qubit)
+rotation_angle = pi/4
+# Rotation: qc.ry(rotation_angle, q[0]) # qc.ry(angle_of_rotation_IN_RADIAN_and_multiplied_by_TWO, qubit)
+qc.ry(rotation_angle, q[0])
+
+reflection_angle = pi/4
+# Reflection(reflection_angle): Hadamard -> rz(negative_of_reflection_angle) -> Hadamard
+qc.h(q[0])
+qc.rz(-reflection_angle, q[0])
+qc.h(q[0])
 
 qc.measure(q,c)
 
@@ -15,33 +25,29 @@ qc.measure(q,c)
 qc.draw(output='mpl')
 
 # execute the program n times
-n = 1000
-job = execute(qc,Aer.get_backend('qasm_simulator'),shots=n)
+n = 1
+job = execute(qc, Aer.get_backend('qasm_simulator'),shots=n)
 
 # print the results
 counts = job.result().get_counts(qc)
 print(counts)
-
-# draw the histogram
 plot_histogram(counts)
-
-from math import sin,cos
+print()
 
 # the quantum state
-quantum_state = [ cos(rotation_angle) , sin (rotation_angle) ]
-print("The quantum state is",round(quantum_state[0],4),"|0> +",round(quantum_state[1],4),"|1>")
+print("The quantum state is", cos(rotation_angle),"|0> +", sin(rotation_angle),"|1>")
+print()
 
-the_expected_number_of_zeros = n*cos(rotation_angle)**2
-the_expected_number_of_ones = n*sin(rotation_angle)**2
+# probabiltiy
+print("Probability/Amplitude of '0':", cos(rotation_angle)**2)
+print("Probability/Amplitude of '1':",sin(rotation_angle)**2)
+print()
 
 # expected results
-print("The expected value of observing '0' is",round(the_expected_number_of_zeros,4))
-print("The expected value of observing '1' is",round(the_expected_number_of_ones,4))
+print("The expected value of observing '0':", n*cos(rotation_angle)**2)
+print("The expected value of observing '1':", n*sin(rotation_angle)**2)
+print()
 
 # draw the quantum state
-
-quantum_file = path_files+"quantum.py"
-%run $quantum_file
-
 draw_qubit()
-draw_quantum_state(quantum_state[0],quantum_state[1],"|v>")
+draw_quantum_state(cos(rotation_angle), sin(rotation_angle),"|v>")
