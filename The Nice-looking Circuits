@@ -7,10 +7,20 @@ c = ClassicalRegister(1,"c")
 # define a quantum circuit
 qc = QuantumCircuit(q,c)
 
+# qaux = QuantumRegister(1,"qaux")
+# q = QuantumRegister(4,"q")
+# c = ClassicalRegister(4,"c")
+
 qc.h(q[0]) # apply the first Hadamard
 qc.measure(q,c) # the first measurement
 qc.h(q[0]).c_if(c,0) # apply the second Hadamard if the measurement outcome is 0
 qc.measure(q[0],c) # the second measurement
+qc.cx(q[1],q[0])
+
+# qc.ccx(control-qubit1,control-qubit2,target-qubit)
+# # step 1: set qaux to |1> if both q3 and q2 are in |1>
+# qc.ccx(q[3],q[2],qaux[0])
+
 
 # draw the circuit
 display(qc.draw(output="mpl"))
