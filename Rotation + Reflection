@@ -1,1 +1,15 @@
-quantum_circuit.ry(2 * angle_of_rotation,qubit)
+from qiskit import QuantumRegister, ClassicalRegister, QuantumCircuit, execute, Aer
+from qiskit.visualization import plot_histogram
+from math import pi
+
+q =  QuantumRegister(1) # quantum register with a single qubit
+c = ClassicalRegister(1) # classical register with a single bit
+qc = QuantumCircuit(q,c) # quantum circuit with quantum and classical registers
+
+rotation_angle = 2*pi/3
+qc.ry(2*rotation_angle,q[0]) # qc.ry(angle_of_rotation_IN_RADIAN_and_multiplied_by_TWO, qubit)
+
+qc.measure(q,c)
+
+# draw the circuit
+qc.draw(output='mpl')
