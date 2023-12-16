@@ -1,5 +1,5 @@
 import cirq
-from cirq import X
+from cirq import X, rx, ry, rz
 from cirq_web import BlochSphere
 from math import pi
 from random import randrange
@@ -15,6 +15,13 @@ phi = pi/8
 labmda = pi/2
 
 myU3(circuit, theta, phi, labmda, q0)
+
+
+# circuit.append(rx(t).on(q0))
+# circuit.append(ry(t).on(q0))
+# circuit.append(rz(t).on(q0))
+
+
 print(circuit)
 
 s = cirq.Simulator()
