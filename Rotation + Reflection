@@ -13,3 +13,35 @@ qc.measure(q,c)
 
 # draw the circuit
 qc.draw(output='mpl')
+
+# execute the program 1000 times
+job = execute(qc,Aer.get_backend('qasm_simulator'),shots=1000)
+
+# print the results
+counts = job.result().get_counts(qc)
+print(counts)
+
+# draw the histogram
+plot_histogram(counts)
+
+from math import sin,cos
+
+# the quantum state
+quantum_state = [ cos(rotation_angle) , sin (rotation_angle) ]
+print("The quantum state is",round(quantum_state[0],4),"|0> +",round(quantum_state[1],4),"|1>")
+
+the_expected_number_of_zeros = 1000*cos(rotation_angle)**2
+the_expected_number_of_ones = 1000*sin(rotation_angle)**2
+
+# expected results
+print("The expected value of observing '0' is",round(the_expected_number_of_zeros,4))
+print("The expected value of observing '1' is",round(the_expected_number_of_ones,4))
+
+# draw the quantum state
+
+quantum_file = path_files+"quantum.py"
+%run $quantum_file
+
+draw_qubit()
+
+draw_quantum_state(quantum_state[0],quantum_state[1],"|v>")
