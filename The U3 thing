@@ -12,9 +12,9 @@ q0 = cirq.LineQubit(0)
 
 theta = pi/4
 phi = pi/8
-lambda = pi/2
+labmda = pi/2
 
-myU3(circuit, theta, phi, lambda, q0)
+myU3(circuit, theta, phi, labmda, q0)
 print(circuit)
 
 s = cirq.Simulator()
